@@ -2,37 +2,33 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
   pagenum = request.GET.get('pagenum', 1)
    
-     pa = Paginator(all_courses, 2)
+  pa = Paginator(all_courses, 2)
       
-        try:
-	    page_list = pa.page(pagenum)
+  try:
+	page_list = pa.page(pagenum)
 
-	      except PageNotAnInteger:
-
-	          page_list = pa.page(1)
-
-		    except EmptyPage:
-
-		            page_list = pa.page(pa.num_pages)
-
-			     <div class="pageturn">
-			             <ul class="pagelist">
-				                 {% if page_list.has_previous %}
-						                  <li class="long"><a href="?pagenum={{ page_list.previous_page_number }}&sort={{ sort_type }}">上一页</a>
-								                 </li>
-										              {% else %}
-											                      <li class="long"><a href="?pagenum=1&sort={{ sort_type }}">上一页</a></li>
-													                   {% endif %}
-															                                   
-																			     {% for num in page_list.paginator.page_range %}        
-																			             <li {% if num == page_list.number %}class="active"{% endif %}><a href="?pagenum={{ num }}&sort={{ sort_type }}">{{ num }}</a></li>
-																				                 {% endfor %}
-																						                {% if page_list.has_next %}
-																								                 <li class="long"><a href="?pagenum={{ page_list.next_page_number }}&sort={{ sort_type }}">下一页</a>
-																										             </li>
-																											                  {% else %}
-																													               <li class="long"><a  href="?pagenum={{ page_list.paginator.num_pages }}&sort={{ sort_type }}">下一页</a>
-																														                   </li>
-																																              {% endif %}
+  except PageNotAnInteger:
+         page_list = pa.page(1)
+  except EmptyPage:
+	 page_list = pa.page(pa.num_pages)
+	 
+	 <div class="pageturn">
+            <ul class="pagelist">
+		{% if page_list.has_previous %}
+	            <li class="long"><a href="?pagenum={{ page_list.previous_page_number }}&sort={{ sort_type }}">上一页</a>
+		 </li>
+	   {% else %}
+	 <li class="long"><a href="?pagenum=1&sort={{ sort_type }}">上一页</a></li>
+      {% endif %}												                          																	     {% for num in page_list.paginator.page_range %}        
+																             <li {% if num == page_list.number %}class="active"{% endif %}><a href="?pagenum={{ num }}&sort={{ sort_type }}">{{ num }}</a></li>
+																	   {% endfor %}
+													
+{% if page_list.has_next %}
+																          <li class="long"><a href="?pagenum={{ page_list.next_page_number }}&sort={{ sort_type }}">下一页</a>
+																      </li>
+																       {% else %}														              <li class="long"><a  href="?pagenum={{ page_list.paginator.num_pages }}&sort={{ sort_type }}">下一页</a>
+  </li>
+													
+{% endif %}
 																																	              </ul>
 																																		            </div>
